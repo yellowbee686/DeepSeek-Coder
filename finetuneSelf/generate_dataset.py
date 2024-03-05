@@ -20,6 +20,7 @@ def preprocess_file(file_path, input_dir):
     relative_path = file_path.relative_to(input_dir)
     with open(file_path, 'r', encoding='utf-8') as file:
         content = file.read()
+    # 拼接path不确定是否会造成误导，后期可以尝试不拼接path的
     content_with_path = f"# {relative_path}\n{content}"
     return str(relative_path), content_with_path
 
