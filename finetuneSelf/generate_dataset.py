@@ -28,6 +28,7 @@ def create_dataset(files, input_dir):
     为收集到的文件创建一个dataset。
     """
     data = {'path': [], 'text': []}
+    print(f'Collected {len(files)} files.')
     for file_path in files:
         path, content = preprocess_file(file_path, input_dir)
         print(f'Processing file:{path}')
