@@ -30,6 +30,8 @@ def create_dataset(files, input_dir):
     data = {'path': [], 'text': []}
     for file_path in files:
         path, content = preprocess_file(file_path, input_dir)
+        print(f'Processing file:{path}')
+        print(f'Content:{content[:100]}')
         data['path'].append(path)
         data['text'].append(content)
     return Dataset.from_dict(data)
