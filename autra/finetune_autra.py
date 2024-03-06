@@ -7,7 +7,7 @@ import torch
 import torch.distributed
 import transformers
 from transformers import Trainer
-from datasets import load_dataset
+from datasets import load_dataset, load_from_disk
 from trl import SFTTrainer
 
 IGNORE_INDEX = -100
@@ -136,11 +136,16 @@ def train():
     if training_args.local_rank == 0:
         print("Load model from {} over.".format(model_args.model_name_or_path))
 
-    raw_train_datasets = load_dataset(
+    # raw_train_datasets = load_dataset(
+    #     data_args.data_path,
+    #     split="train",
+    #     cache_dir=training_args.cache_dir
+    # )
+    raw_train_datasets = load_from_disk(
         data_args.data_path,
-        split="train",
-        cache_dir=training_args.cache_dir
+        keep_in_memory=True
     )
+    data = raw_train_datasets['train']
     if training_args.local_rank > 0:
         torch.distributed.barrier()
 
@@ -149,7 +154,7 @@ def train():
 
     trainer = SFTTrainer(
         model=model,
-        train_dataset=raw_train_datasets,
+        train_dataset=data,
         max_seq_length=training_args.model_max_length,  # by default is 512
         args=training_args,
         dataset_text_field='text',
