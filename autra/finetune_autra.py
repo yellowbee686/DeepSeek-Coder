@@ -137,8 +137,7 @@ def train():
         print("Load model from {} over.".format(model_args.model_name_or_path))
 
     raw_train_datasets = load_dataset(
-        'disk',
-        data_files=data_args.data_path,
+        data_args.data_path,
         split="train",
         cache_dir=training_args.cache_dir
     )
