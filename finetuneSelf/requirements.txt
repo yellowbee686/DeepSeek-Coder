@@ -4,6 +4,8 @@ transformers>=4.35.0
 accelerate
 attrdict
 tqdm
+trl
+peft
 
 deepspeed
 datasets
