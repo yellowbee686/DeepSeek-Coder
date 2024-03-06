@@ -3,7 +3,7 @@ OUTPUT_PATH="/work02/chengxiao/finetune_models"
 MODEL="deepseek-ai/deepseek-coder-6.7b-base"
 
 deepspeed finetune_autra.py \
-    --model_name_or_path $MODEL_PATH \
+    --model_name_or_path $MODEL \
     --data_path $DATA_PATH \
     --output_dir $OUTPUT_PATH \
     --num_train_epochs 3 \
