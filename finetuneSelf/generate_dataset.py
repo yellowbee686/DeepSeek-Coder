@@ -36,21 +36,28 @@ def create_dataset(files, input_dir):
         print(f'Content:{content[:100]}')
         data['path'].append(path)
         data['text'].append(content)
-    return Dataset.from_dict(data)
+    dataset = Dataset.from_dict(data)
+    # 使用DatasetDict来组织数据，并指定split
+    dataset_dict = DatasetDict({
+        'train': dataset  # 假设全部数据都用作训练集
+    })
+    return dataset_dict
 
-def save_dataset(dataset, output_dir):
+def save_dataset(dataset_dict, output_dir):
     """
     将dataset保存到指定目录。
     """
-    dataset.save_to_disk(output_dir)
+    dataset_dict.save_to_disk(output_dir)
 
 def main(input_dir, output_dir):
     extensions = ['.py', '.h', '.cc', '.cu']
     files = collect_files(input_dir, extensions)
-    dataset = create_dataset(files, input_dir)
-    save_dataset(dataset, output_dir)
+    dataset_dict = create_dataset(files, input_dir)
+    save_dataset(dataset_dict, output_dir)
 
 # 示例用法
-input_dir = '/data01/home/xiao.cheng/code/autra_code'
-output_dir = '/data01/home/xiao.cheng/code/autra_dataset'
-main(input_dir, output_dir)
+# input_dir = '/data01/home/xiao.cheng/code/autra_code'
+# output_dir = '/data01/home/xiao.cheng/code/autra_dataset'
+s_input_dir = '/work02/chengxiao/autra_code'
+s_output_dir = '/work02/chengxiao/autra_dataset'
+main(s_input_dir, s_output_dir)
